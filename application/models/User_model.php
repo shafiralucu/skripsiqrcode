@@ -2,16 +2,25 @@
 class User_model extends CI_Model
 {
 
+    //method untuk update last login
+    public function _updateLastLogin()
+    {
+        $pustakawan = $this->db->get($this->_table)->row();
+        $this->db->set('last_login', date("Y-m-d H:i:s"));
+        $this->db->where('id_pustakawan', $pustakawan->id_pustakawan);
+        $this->db->update('pustakawan');
+    }
+
     public function attempt_anggota($email_anggota, $password_anggota)
     {
         $this->db->where('email', $email_anggota);
-        $query_anggota = $this->db->get('anggota');
+        $query = $this->db->get('anggota');
 
-        if ($query_anggota->num_rows() > 0) {
-            $hash = $query_anggota->row('password');
+        if ($query->num_rows() > 0) {
+            $hash = $query->row('password');
 
             if (password_verify($password_anggota, $hash)) {
-                foreach ($query_anggota->result() as $x) {
+                foreach ($query->result() as $x) {
                     $sess = [
                         'id_anggota'        => $x->id_anggota,
                         'nama'              => $x->nama,
@@ -38,13 +47,13 @@ class User_model extends CI_Model
     public function attempt_pustakawan($email_pustakawan, $password_pustakawan)
     {
         $this->db->where('email', $email_pustakawan);
-        $query_pustakawan = $this->db->get('pustakawan');
+        $query2 = $this->db->get('pustakawan');
 
-        if ($query_pustakawan->num_rows() > 0) {
-            $hash = $query_pustakawan->row('password');
+        if ($query2->num_rows() > 0) {
+            $hash = $query2->row('password');
 
             if (password_verify($password_pustakawan, $hash)) {
-                foreach ($query_pustakawan->result() as $y) {
+                foreach ($query2->result() as $y) {
                     $sess = [
                         'id_pustakawan' => $y->id_pustakawan,
                         'nama'          => $y->nama,
@@ -74,12 +83,5 @@ class User_model extends CI_Model
         redirect('Login');
     }
 
-    //method untuk update last login
-    public function _updateLastLogin($nama_pustakawan)
-    {
-        $pustakawan = $this->db->get($this->_table)->row();
-        $this->db->set('last_login', date("Y-m-d H:i:s"));
-        $this->db->where('id_pustakawan', $pustakawan->id_pustakawan);
-        $this->db->update('pustakawan');
-    }
+    
 }
