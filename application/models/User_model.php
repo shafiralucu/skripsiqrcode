@@ -32,7 +32,7 @@ class User_model extends CI_Model
                 }
                 $this->session->set_userdata($sess);
                 $this->session->set_flashdata('info_login', 'Email atau Password Anggota anda benar!');
-                redirect('Home_Anggota');
+                redirect('anggota/Home_Anggota');
             } else {
                 $this->session->set_flashdata('info', 'Email atau Password Anggota anda salah!');
                 redirect('Login');
@@ -65,7 +65,7 @@ class User_model extends CI_Model
                 }
 
                 $this->session->set_userdata($sess);
-                redirect('Home_Pustakawan');
+                redirect('pustakawan/Home_Pustakawan');
             } else {
                 $this->session->set_flashdata('info_login_2', 'Email atau Password anda salah!');
                 redirect('Login');
