@@ -128,7 +128,7 @@
 			<div id="loginanggota" class="container tab-pane"><br>
 				<div class="col-md-6 .offset-md-3 login-form-1">
 					<h3>Login untuk Anggota</h3>
-					<form action="<?= site_url('Login/attempt_anggota') ?>" method="post">
+					<form action="<?= site_url('Login/attempt_anggota_login') ?>" method="post">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Masukkan email anggota anda" name="email_anggota" value="<?php echo set_value('email_anggota'); ?>" required />
 						</div>
@@ -148,7 +148,7 @@
 			<div id="loginpustakawan" class="container tab-pane fade"><br>
 				<div class="col-md-6 login-form-2">
 					<h3>Login untuk Pustakawan</h3>
-					<form action="<?= site_url('Login/attempt_pustakawan') ?>" method="post">
+					<form action="<?= site_url('Login/attempt_pustakawan_login') ?>" method="post">
 						<div class="form-group">
 							<input type="text" class="form-control" name="email_pustakawan" placeholder="Masukkan email pustakawan anda" value="<?php echo set_value('email_pustakawan'); ?>" required />
 						</div>

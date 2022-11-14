@@ -95,8 +95,8 @@
 
 
   <div id="lihat_jadwal">
-    <h2><b>CRUD Anggota</b></h2>
-    <h4>Halaman untuk menambah, menghapus dan mengedit anggota</h4>
+    <h2><b>CRUD Buku</b></h2>
+    <h4>Halaman untuk menambah, menghapus dan mengedit buku</h4>
   </div>
   <br>
 
@@ -121,7 +121,7 @@
         </div>
 
         <!-- form untuk tambah anggota -->
-        <form action="<?= base_url('index.php/pustakawan/AturAnggota_pustakawan/add_anggota'); ?>" method="POST">
+        <form action="<?= base_url('admin/AturAnggota_pustakawan/add_anggota'); ?>" method="POST">
           <div class="modal-body">
             <div class="form-group">
               <label>Nama Anggota</label>
@@ -132,19 +132,16 @@
               <input type="text" name="password" class="form-control" value="" id="password">
             </div>
             <div class="form-group">
-              <label>Email</label>
-              <input type="text" name="emailanggota" class="form-control" value="" id="emailanggota">
-            </div>
-            <div class="form-group">
               <label>Alamat</label>
               <input type="text" name="alamat" class="form-control" value="" id="alamat">
             </div>
             <div class="form-group">
-              <label>No. Handphone:</label>
-              <input type="text" name="no_telepon" class="form-control" value="" id="no_telepon">
+              <label>Email</label>
+              <input type="text" name="emailanggota" class="form-control" value="" id="emailanggota">
             </div>
             <div class="form-group">
-              <input type="hidden" name="last_login" id="last_login" value="2001-01-01 00:00:00" />
+              <label>No. Handphone:</label>
+              <input type="text" name="nohp" class="form-control" value="" id="nohp">
             </div>
             <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
             <div class="modal-footer">
@@ -181,7 +178,7 @@
         <td><?php echo $rows->no_telepon ?></td>
         <td><?php echo '--' ?></td>
         <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditAnggota">Edit Jadwal</button></td>
-        <td><?php echo anchor("pustakawan/AturAnggota_Pustakawan/delete_anggota/{$rows->id_anggota}", 'Hapus Anggota', ['class' => 'btn btn-danger btn-sm']); ?> </td>
+        <td><?php echo anchor("pustakawan/AturAnggota_Pustakawan/delete/{$rows->id_anggota}", 'Hapus Anggota', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
 
@@ -195,8 +192,8 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="<?php echo base_url('index.php/pustakawan/AturAnggota_pustakawan/edit_anggota'); ?>" method="POST">
-                <input type="hidden" name="id_edit" id="id_edit" value="<?php echo $rows->id_anggota; ?>" />
+              <form action="<?php echo base_url('admin/AturAnggota_pustakawan/edit_anggota'); ?>" method="POST">
+                <input type="hidden" name="id" id="id" value="<?php echo $rows->id_anggota; ?>" />
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Nama Anggota</label>

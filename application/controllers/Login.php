@@ -18,7 +18,7 @@ class Login extends CI_Controller
     }
 
     //fungsi login anggota
-    public function attempt_anggota()
+    public function attempt_anggota_login()
     {
         $email_anggota = $this->input->post('email_anggota');
         $password_anggota = $this->input->post('password_anggota');
@@ -27,7 +27,7 @@ class Login extends CI_Controller
     }
 
      //fungsi login pustakawan
-     public function attempt_pustakawan()
+     public function attempt_pustakawan_login()
      {
          $email_pustakawan = $this->input->post('email_pustakawan');
          $password_pustakawan = $this->input->post('password_pustakawan');

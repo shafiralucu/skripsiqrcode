@@ -1,5 +1,5 @@
 <?php
-class AturAnggota_Pustakawan extends CI_Controller
+class AturBuku_Pustakawan extends CI_Controller
 {
 
     //DEFAULT CONTROLLER
@@ -15,7 +15,7 @@ class AturAnggota_Pustakawan extends CI_Controller
     public function index()
     {
         $data['list_anggota'] = $this->Anggota_model->show_anggota();
-        $this->load->view('v_pustakawan_edit_anggota', $data);
+        $this->load->view('v_pustakawan_edit_buku', $data);
     }
 
     public function add_anggota()
@@ -24,43 +24,52 @@ class AturAnggota_Pustakawan extends CI_Controller
         $nama = $this->input->post('nama');
         $password = $this->input->post('password');
         $email = $this->input->post('emailanggota');
-        $alamat = $this->input->post('alamat');
-        $no_telepon = $this->input->post('no_telepon');
-        $last_login = $this->input->post('last_login');
- 
+        $no_hp = $this->input->post('nohp');
+        $alamat = $this->session->userdata('alamat');
+
         $data['nama'] = $nama;
         $data['password'] = $password;
         $data['email'] = $email;
-        $data['no_telepon'] = $no_telepon;
+        $data['no_hp'] = $no_hp;
         $data['alamat'] = $alamat;
-        $data['last_login'] = $last_login;
 
 
         $this->Anggota_model->add_anggota($data);
 
-        
-        $data['list_anggota'] = $this->Anggota_model->show_anggota();
+
         $this->session->set_flashdata('message', '<div class="alert alert-success">Data anggota berhasil dimasukkan!</div>');
         $this->load->view('v_pustakawan_edit_anggota', $data);
     }
 
-    public function delete_anggota($id)
+    public function delete_anggota()
     {
-        if ($this->Anggota_model->delete_anggota($id)) {
-			$this->session->set_flashdata('deleted', '<div class="alert alert-success">Data anggota telah terhapus.</div>');
-            redirect('pustakawan/AturAnggota_pustakawan', 'refresh');
-		} else {
-			$this->session->set_flashdata('deleted', '<div class="alert alert-danger">Gagal menghapus data anggota.</div>');
-            redirect('pustakawan/AturAnggota_pustakawan', 'refresh');
-		}
+
+        $nama = $this->input->post('nama');
+        $password = $this->input->post('password');
+        $email = $this->input->post('emailanggota');
+        $no_hp = $this->input->post('nohp');
+        $alamat = $this->input->post('alamat');
+
+        $data['nama'] = $nama;
+        $data['password'] = $password;
+        $data['email'] = $email;
+        $data['no_hp'] = $no_hp;
+        $data['alamat'] = $alamat;
+
+
+        $this->Anggota_model->delete_anggota($data);
+
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Mata kuliah berhasil dimasukkan!</div>');
+        $this->load->view('v_admin', $data);
     }
 
 
     //fungsi edit file penugasan
-	public function edit_anggota()
+	public function edit()
 	{
 		//get id yang mau di edit
-		$id_anggota = $this->input->post('id_edit');
+		$id = $this->input->post('id_anggota');
 
 		$nama = $this->input->post('nama');
         $password = $this->input->post('password');
@@ -70,17 +79,17 @@ class AturAnggota_Pustakawan extends CI_Controller
 
 
 		$data = array(
-			'id_anggota' => $id_anggota,
+			'id' => $id,
 			'nama' => $nama,
 			'password' => $password,
 			'email' => $email,
-			'no_telepon' => $no_hp,
+			'no_hp' => $no_hp,
 			'alamat' => $alamat
 		);
 
 
 		//jika anggota berhasil diedit
-		if ($this->Anggota_model->edit_anggota($id_anggota, $data)) {
+		if ($this->Anggota_model->edit_anggota($id, $data)) {
 			$this->session->set_flashdata('updated', '<div class="alert alert-success">Data anggota telah berhasil di-update.</div>');
             redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');
 		} else {
