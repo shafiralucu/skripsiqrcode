@@ -100,53 +100,60 @@
   </div>
   <br>
 
-  <!-- Button untuk open tambah anggota -->
+  <!-- Button untuk open tambah buku -->
   <div class="col text-center">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahAnggota">
-      Tambah anggota disini
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahBuku">
+      Tambah buku dan generate QR Code buku disini
     </button>
   </div>
 
-  <!-- Modal tambah jadwal -->
-  <div class="modal fade" id="modalTambahAnggota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal tambah buku -->
+  <div class="modal fade" id="modalTambahBuku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTambahAnggota" style="text-align: center;">Semua data pada form dibawah ini WAJIB diisi</b>
+          <h5 class="modal-title" id="modalTambahBuku" style="text-align: center;">Semua data pada form dibawah ini WAJIB diisi</b>
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
-        <!-- form untuk tambah anggota -->
-        <form action="<?= base_url('admin/AturAnggota_pustakawan/add_anggota'); ?>" method="POST">
+        <!-- form untuk tambah buku -->
+        <form action="<?= base_url('index.php/pustakawan/AturBuku_Pustakawan/add_buku'); ?>" method="POST">
           <div class="modal-body">
             <div class="form-group">
-              <label>Nama Anggota</label>
-              <input type="text" name="nama" class="form-control" value="" id="nama">
+              <label>ISBN Buku</label>
+              <input type="text" name="isbn_buku" class="form-control" value="" id="isbn_buku">
             </div>
             <div class="form-group">
-              <label>Password</label>
-              <input type="text" name="password" class="form-control" value="" id="password">
+              <label>Judul Buku</label>
+              <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku">
             </div>
             <div class="form-group">
-              <label>Alamat</label>
-              <input type="text" name="alamat" class="form-control" value="" id="alamat">
+              <label>Nomor Panggil</label>
+              <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil">
             </div>
             <div class="form-group">
-              <label>Email</label>
-              <input type="text" name="emailanggota" class="form-control" value="" id="emailanggota">
+              <label>Penerbit</label>
+              <input type="text" name="penerbit" class="form-control" value="" id="penerbit">
             </div>
             <div class="form-group">
-              <label>No. Handphone:</label>
-              <input type="text" name="nohp" class="form-control" value="" id="nohp">
+              <label>Tahun Terbit</label>
+              <input type="text" name="tahun" class="form-control" value="" id="tahun">
+            </div>
+            <div class="form-group">
+              <label>Bahasa</label>
+              <input type="text" name="bahasa" class="form-control" value="" id="bahasa">
+            </div>
+            <div class="form-group">
+              <input type="hidden" name="status" class="form-control" value="Available" id="status">
             </div>
             <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <input type="submit" class="btn btn-primary" value="Tambah Anggota">
+              <input type="submit" class="btn btn-primary" value="Tambah Buku dan Generate QR">
             </div>
           </div>
       </div>
@@ -158,68 +165,74 @@
   <!-- tabel untuk mengeluarkan isi dari tabel anggota  -->
   <table class="table table-striped" style="margin-left:auto; margin-right:auto; text-align:center; width: 80%; ">
     <thead style="font-weight: bold;" class="thead-dark">
-      <td>ID</td>
-      <td>Nama Anggota</td>
-      <td>Alamat</td>
-      <td>Email</td>
-      <td>No. Hp</td>
-      <td>Buku yang sedang dipinjam</td>
-      <td>Edit Anggota</td>
-      <td>Hapus Anggota</td>
+      <td>ISBN Buku</td>
+      <td>Judul Buku</td>
+      <td>Nomor Panggil</td>
+      <td>Penerbit</td>
+      <td>Tahun Terbit</td>
+      <td>Bahasa</td>
+      <td>Status</td>
+      <td>QR Code</td>
+      <td>Edit Buku</td>
+      <td>Hapus Buku</td>
+
     </thead>
+    <!-- kode php untuk ambil data buku dari database -->
     <?php
-    foreach ($list_anggota as $rows) {
+    foreach ($list_buku as $rows) {
     ?>
       <tr>
-        <td><?php echo $rows->id_anggota ?></td>
-        <td><?php echo $rows->nama ?></td>
-        <td><?php echo $rows->alamat ?></td>
-        <td><?php echo $rows->email ?></td>
-        <td><?php echo $rows->no_telepon ?></td>
-        <td><?php echo '--' ?></td>
-        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditAnggota">Edit Jadwal</button></td>
-        <td><?php echo anchor("pustakawan/AturAnggota_Pustakawan/delete/{$rows->id_anggota}", 'Hapus Anggota', ['class' => 'btn btn-danger btn-sm']); ?> </td>
+        <td><?php echo $rows->ISBN_buku ?></td>
+        <td><?php echo $rows->judul_buku ?></td>
+        <td><?php echo $rows->nomor_panggil ?></td>
+        <td><?php echo $rows->penerbit ?></td>
+        <td><?php echo $rows->tahun_terbit ?></td>
+        <td><?php echo $rows->bahasa ?></td>
+        <td><?php echo $rows->status ?></td>
+        <td><img style="width: 100px;" src="<?php echo base_url() . 'assets/img/' . $rows->qr_code; ?>"></td>
+        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku">Edit Buku</button></td>
+        <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_buku/{$rows->ISBN_buku}", 'Hapus Buku', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
 
-        <!-- modal untuk edit file penugasan !-->
-        <div class="modal fade" id="modalEditAnggota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- modal untuk edit buku !-->
+        <div class="modal fade" id="modalEditBuku" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalEditAnggota">Edit penugasan</h5>
+                <h5 class="modal-title" id="modalEditBuku">Edit buku</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="<?php echo base_url('admin/AturAnggota_pustakawan/edit_anggota'); ?>" method="POST">
-                <input type="hidden" name="id" id="id" value="<?php echo $rows->id_anggota; ?>" />
+              <form action="<?php echo base_url('index.php/pustakawan/AturBuku_pustakawan/edit_buku'); ?>" method="POST">
+                <input type="hidden" name="isbn_buku" id="isbn_buku" value="<?php echo $rows->isbn_buku; ?>" />
                 <div class="modal-body">
                   <div class="form-group">
-                    <label>Nama Anggota</label>
-                    <input type="text" name="nama" class="form-control" value="" id="nama">
+                    <label>Judul Buku</label>
+                    <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku">
                   </div>
                   <div class="form-group">
-                    <label>Password</label>
-                    <input type="text" name="password" class="form-control" value="" id="password">
+                    <label>Nomor Panggil</label>
+                    <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil">
                   </div>
                   <div class="form-group">
-                    <label>Alamat</label>
-                    <input type="text" name="alamat" class="form-control" value="" id="alamat">
+                    <label>Penerbit</label>
+                    <input type="text" name="penerbit" class="form-control" value="" id="penerbit">
                   </div>
                   <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" name="emailanggota" class="form-control" value="" id="emailanggota">
+                    <label>Tahun Terbit</label>
+                    <input type="text" name="tahun" class="form-control" value="" id="tahun">
                   </div>
                   <div class="form-group">
-                    <label>No. Handphone:</label>
-                    <input type="text" name="nohp" class="form-control" value="" id="nohp">
+                    <label>Bahasa</label>
+                    <input type="text" name="bahasa" class="form-control" value="" id="bahasa">
                   </div>
+                  <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Simpan jadwal">
+                    <input type="submit" class="btn btn-primary" value="Simpan Buku">
                   </div>
-                  <h6 class="text-danger">*Pastikan semua data telah terisi dengan benar</h6>
               </form>
             </div>
           </div>

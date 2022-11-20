@@ -6,95 +6,107 @@ class AturBuku_Pustakawan extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("User_model");
-        $this->load->model("Anggota_model");
+        $this->load->model("Buku_model");
         $this->load->library('form_validation');
         $this->load->library('session');
     }
 
     public function index()
     {
-        $data['list_anggota'] = $this->Anggota_model->show_anggota();
+        $data['list_buku'] = $this->Buku_model->show_buku();
         $this->load->view('v_pustakawan_edit_buku', $data);
     }
 
-    public function add_anggota()
+    public function add_buku()
     {
-
-        $nama = $this->input->post('nama');
-        $password = $this->input->post('password');
-        $email = $this->input->post('emailanggota');
-        $no_hp = $this->input->post('nohp');
-        $alamat = $this->session->userdata('alamat');
-
-        $data['nama'] = $nama;
-        $data['password'] = $password;
-        $data['email'] = $email;
-        $data['no_hp'] = $no_hp;
-        $data['alamat'] = $alamat;
+        $isbn_buku = $this->input->post('isbn_buku');
+        $judul_buku = $this->input->post('judul_buku');
+        $nomor_panggil = $this->input->post('nomor_panggil');
+        $penerbit = $this->input->post('penerbit');
+        $tahun = $this->input->post('tahun');
+        $bahasa = $this->input->post('bahasa');
+        $status = $this->input->post('status');
 
 
-        $this->Anggota_model->add_anggota($data);
+        //untuk generate qr code
+        $config['cacheable']    = true; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/img/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
 
+        $data['isbn_buku'] = $isbn_buku;
+        $data['judul_buku'] = $judul_buku;
+        $data['nomor_panggil'] = $nomor_panggil;
+        $data['penerbit'] = $penerbit;
+        $data['tahun'] = $tahun;
+        $data['bahasa'] = $bahasa;
+        $data['status'] = $status;
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Data anggota berhasil dimasukkan!</div>');
-        $this->load->view('v_pustakawan_edit_anggota', $data);
+        //buat nama dari qr code sesuai dengan isbn buku
+        $image_name = $isbn_buku.'.png';
+
+        $params['data'] = $isbn_buku; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H = High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+        $this->ciqrcode->generate($params); //fungsi untuk generate QR CODE
+
+        $data['qr_code'] = $image_name;
+        $this->Buku_model->add_buku($data);
+
+        $data['list_buku'] = $this->Buku_model->show_buku();
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Buku berhasil dimasukkan!</div>');
+        $this->load->view('v_pustakawan_edit_buku', $data);
     }
 
-    public function delete_anggota()
+    public function delete_buku($ISBN_buku)
     {
-
-        $nama = $this->input->post('nama');
-        $password = $this->input->post('password');
-        $email = $this->input->post('emailanggota');
-        $no_hp = $this->input->post('nohp');
-        $alamat = $this->input->post('alamat');
-
-        $data['nama'] = $nama;
-        $data['password'] = $password;
-        $data['email'] = $email;
-        $data['no_hp'] = $no_hp;
-        $data['alamat'] = $alamat;
-
-
-        $this->Anggota_model->delete_anggota($data);
-
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Mata kuliah berhasil dimasukkan!</div>');
-        $this->load->view('v_admin', $data);
+        if ($this->Buku_model->delete_buku($ISBN_buku)) {
+            $this->session->set_flashdata('deleted', '<div class="alert alert-success">Data Buku telah terhapus.</div>');
+            redirect('pustakawan/AturBuku_pustakawan', 'refresh');
+        } else {
+            $this->session->set_flashdata('deleted', '<div class="alert alert-danger">Gagal menghapus data buku.</div>');
+            redirect('pustakawan/AturBuku_pustakawan', 'refresh');
+        }
     }
 
 
-    //fungsi edit file penugasan
-	public function edit()
-	{
-		//get id yang mau di edit
-		$id = $this->input->post('id_anggota');
+    //fungsi edit buku
+    public function edit_buku()
+    {
+        //get id yang mau di edit
+        $isbn_buku = $this->input->post('isbn_buku');
 
-		$nama = $this->input->post('nama');
-        $password = $this->input->post('password');
-        $email = $this->input->post('emailanggota');
-        $no_hp = $this->input->post('nohp');
-        $alamat = $this->input->post('alamat');
-
-
-		$data = array(
-			'id' => $id,
-			'nama' => $nama,
-			'password' => $password,
-			'email' => $email,
-			'no_hp' => $no_hp,
-			'alamat' => $alamat
-		);
+        $nomor_panggil = $this->input->post('nomor_panggil');
+        $penerbit = $this->input->post('penerbit');
+        $tahun = $this->input->post('tahun');
+        $bahasa = $this->input->post('bahasa');
+        $qr_code = "";
+        $status = "";
 
 
-		//jika anggota berhasil diedit
-		if ($this->Anggota_model->edit_anggota($id, $data)) {
-			$this->session->set_flashdata('updated', '<div class="alert alert-success">Data anggota telah berhasil di-update.</div>');
-            redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');
-		} else {
-			$this->session->set_flashdata('updated', '<div class="alert alert-danger">Gagal mengupdate data anggota.</div>');
-            redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');
-		}
-	}
+        $data = array(
+            'ISBN_buku' => $isbn_buku,
+            'nomor_panggil' => $nomor_panggil,
+            'penerbit' => $penerbit,
+            'tahun' => $tahun,
+            'bahasa' => $bahasa
+        );
+
+
+        //jika buku berhasil diedit
+        if ($this->Buku_model->edit_buku($isbn_buku, $data)) {
+            $this->session->set_flashdata('updated', '<div class="alert alert-success">Data buku telah berhasil di-update.</div>');
+            redirect('pustakawan/AturBuku_Pustakawan', 'refresh');
+        } else {
+            $this->session->set_flashdata('updated', '<div class="alert alert-danger">Gagal mengupdate data buku.</div>');
+            redirect('pustakawan/AturBuku_Pustakawan', 'refresh');
+        }
+    }
+
 }

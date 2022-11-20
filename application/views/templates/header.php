@@ -109,8 +109,8 @@
         <!-- side nav -->
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="<?= site_url('admin/ImportExport_Admin') ?>">Tambah, hapus, edit anggota</a>
-            <a href="<?= site_url('admin/CRUD_Admin') ?>">Tambah, hapus, edit buku</a>
+            <a href="<?= site_url('pustakawan/AturAnggota_Pustakawan') ?>">Tambah, hapus, edit anggota</a>
+            <a href="<?= site_url('pustakawan/AturBuku_Pustakawan') ?>">Tambah, hapus, edit buku</a>
         </div>
         <span style="font-size:30px;cursor:pointer; margin-right: 1%; color: white;" onclick="openNav()">&#9776;</span>
 

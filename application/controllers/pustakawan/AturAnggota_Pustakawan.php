@@ -56,7 +56,7 @@ class AturAnggota_Pustakawan extends CI_Controller
     }
 
 
-    //fungsi edit file penugasan
+    //fungsi edit anggota
 	public function edit_anggota()
 	{
 		//get id yang mau di edit
