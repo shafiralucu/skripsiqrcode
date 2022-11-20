@@ -160,7 +160,7 @@
 
 
         html * {
-          font-family: 'Roboto Slab', sans-serif;
+          font-family: 'Poppins', sans-serif;
         }
       
 
@@ -214,7 +214,7 @@
               <h5>Scan QR untuk peminjaman buku disini</h5>
               <br>
               <br>
-              <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url();?>dosen/LihatJadwal_Dosen'">Pinjam Buku</button>
+              <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url();?>index.php/anggota/ScanPinjam_Anggota'">Pinjam Buku</button>
           </div>
         </div>
         <div class="card mb-8 box-shadow">
@@ -230,7 +230,7 @@
                 <h5>Scan QR untuk pengembalian buku disini</h5>
               <br>
               <br>
-            <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url();?>dosen/LihatJadwal_Umum'">Pengembalian buku</button>
+            <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url();?>index.php/anggota/ScanKembalikan_Anggota'">Pengembalian buku</button>
           </div>
         </div>
        
