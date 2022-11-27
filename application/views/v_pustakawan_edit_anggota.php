@@ -107,7 +107,7 @@
     </button>
   </div>
 
-  <!-- Modal tambah jadwal -->
+  <!-- Modal tambah anggota -->
   <div class="modal fade" id="modalTambahAnggota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -180,7 +180,7 @@
         <td><?php echo $rows->email ?></td>
         <td><?php echo $rows->no_telepon ?></td>
         <td><?php echo '--' ?></td>
-        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditAnggota">Edit Jadwal</button></td>
+        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditAnggota" onclick="editAnggota(<?php echo $rows->id_anggota ?>, '<?php echo base_url('index.php') ?>')">Edit Anggota</button></td>
         <td><?php echo anchor("pustakawan/AturAnggota_Pustakawan/delete_anggota/{$rows->id_anggota}", 'Hapus Anggota', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
@@ -195,8 +195,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="<?php echo base_url('index.php/pustakawan/AturAnggota_pustakawan/edit_anggota'); ?>" method="POST">
-                <input type="hidden" name="id_edit" id="id_edit" value="<?php echo $rows->id_anggota; ?>" />
+              <form id="editAnggota" action='' method="POST">
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Nama Anggota</label>
@@ -233,3 +232,9 @@
   </table>
 
 </html>
+
+<script>
+  function editAnggota(id, base_url){
+    document.getElementById("editAnggota").action = base_url+"/pustakawan/AturAnggota_pustakawan/edit_anggota/"+id;
+  }
+</script>

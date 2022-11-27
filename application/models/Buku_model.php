@@ -11,7 +11,7 @@ class Buku_model extends CI_Model
         $this->judul_buku = $data['judul_buku'];
         $this->nomor_panggil = $data['nomor_panggil'];
         $this->penerbit = $data['penerbit'];
-        $this->tahun_terbit = $data['tahun'];
+        $this->tahun_terbit = $data['tahun_terbit'];
         $this->bahasa = $data['bahasa']; 
         $this->qr_code = $data['qr_code'];    
         $this->status = $data['status'];                      

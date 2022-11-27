@@ -57,11 +57,11 @@ class AturAnggota_Pustakawan extends CI_Controller
 
 
     //fungsi edit anggota
-	public function edit_anggota()
+	public function edit_anggota($id)
 	{
 		//get id yang mau di edit
-		$id_anggota = $this->input->post('id_edit');
-
+		// $id_edit = $this->input->post('id_edit');
+        $id_edit = $id;
 		$nama = $this->input->post('nama');
         $password = $this->input->post('password');
         $email = $this->input->post('emailanggota');
@@ -70,7 +70,6 @@ class AturAnggota_Pustakawan extends CI_Controller
 
 
 		$data = array(
-			'id_anggota' => $id_anggota,
 			'nama' => $nama,
 			'password' => $password,
 			'email' => $email,
@@ -80,7 +79,7 @@ class AturAnggota_Pustakawan extends CI_Controller
 
 
 		//jika anggota berhasil diedit
-		if ($this->Anggota_model->edit_anggota($id_anggota, $data)) {
+		if ($this->Anggota_model->edit_anggota($id_edit, $data)) {
 			$this->session->set_flashdata('updated', '<div class="alert alert-success">Data anggota telah berhasil di-update.</div>');
             redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');
 		} else {

@@ -77,10 +77,10 @@ class AturBuku_Pustakawan extends CI_Controller
 
 
     //fungsi edit buku
-    public function edit_buku()
+    public function edit_buku($id)
     {
         //get id yang mau di edit
-        $isbn_buku = $this->input->post('isbn_buku');
+        $isbn_buku = $id;
 
         $nomor_panggil = $this->input->post('nomor_panggil');
         $penerbit = $this->input->post('penerbit');
@@ -94,7 +94,7 @@ class AturBuku_Pustakawan extends CI_Controller
             'ISBN_buku' => $isbn_buku,
             'nomor_panggil' => $nomor_panggil,
             'penerbit' => $penerbit,
-            'tahun' => $tahun,
+            'tahun_terbit' => $tahun,
             'bahasa' => $bahasa
         );
 

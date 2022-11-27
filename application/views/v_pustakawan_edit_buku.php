@@ -190,7 +190,7 @@
         <td><?php echo $rows->bahasa ?></td>
         <td><?php echo $rows->status ?></td>
         <td><img style="width: 100px;" src="<?php echo base_url() . 'assets/img/' . $rows->qr_code; ?>"></td>
-        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku">Edit Buku</button></td>
+        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku" onclick="editBuku(<?php echo $rows->ISBN_buku ?>, '<?php echo base_url('index.php') ?>')">Edit Buku</button></td>
         <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_buku/{$rows->ISBN_buku}", 'Hapus Buku', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
@@ -205,8 +205,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="<?php echo base_url('index.php/pustakawan/AturBuku_pustakawan/edit_buku'); ?>" method="POST">
-                <input type="hidden" name="isbn_buku" id="isbn_buku" value="<?php echo $rows->isbn_buku; ?>" />
+              <form id="editBuku" action='' method="POST">
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Judul Buku</label>
@@ -243,3 +242,9 @@
   </table>
 
 </html>
+
+<script>
+  function editBuku(id, base_url){
+    document.getElementById("editBuku").action = base_url+"/pustakawan/AturBuku_pustakawan/edit_buku/"+id;
+  }
+</script>

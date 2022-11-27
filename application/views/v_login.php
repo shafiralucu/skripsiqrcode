@@ -14,6 +14,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
 	<style>
+		body {
+			background-image: url('../../img/perpustakaan.jpg');
+		}
+
 		.login-container {
 			margin-top: 5%;
 			margin-bottom: 5%;
@@ -23,6 +27,8 @@
 			padding: 5%;
 			box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 		}
+
+
 
 		.login-form-1 h3 {
 			text-align: center;
@@ -79,6 +85,7 @@
 </head>
 
 <body>
+
 	<div class="container">
 		<h2>Sistem Peminjaman Buku di Perpustakaan dengan QR Code</h2>
 		<br>
@@ -98,14 +105,14 @@
 			}
 			?>
 
-<?php
+			<?php
 			$info3 = $this->session->flashdata('info_login_2');
 			if (!empty($info3)) {
 				echo $info3;
 			}
 			?>
 
-<?php
+			<?php
 			$info4 = $this->session->flashdata('info_salah');
 			if (!empty($info4)) {
 				echo $info4;
@@ -123,7 +130,7 @@
 			</li>
 		</ul>
 
-		<!-- Tab panes -->
+		<!-- Tab panes -->/
 		<div class="tab-content">
 			<div id="loginanggota" class="container tab-pane"><br>
 				<div class="col-md-6 .offset-md-3 login-form-1">
@@ -146,7 +153,7 @@
 				</div>
 			</div>
 			<div id="loginpustakawan" class="container tab-pane fade"><br>
-				<div class="col-md-6 login-form-2">
+				<div class="col-md-6 .offset-md-3 login-form-2">
 					<h3>Login untuk Pustakawan</h3>
 					<form action="<?= site_url('Login/attempt_pustakawan_login') ?>" method="post">
 						<div class="form-group">
@@ -167,6 +174,8 @@
 			</div>
 		</div>
 	</div>
+
 </body>
+
 
 </html>
