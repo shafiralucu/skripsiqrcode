@@ -103,7 +103,7 @@
   <!-- Button untuk open tambah buku -->
   <div class="col text-center">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalTambahBuku">
-      Tambah buku dan generate QR Code buku disini
+      Tambah buku dan generate QR Code eksemplar disini
     </button>
   </div>
 
@@ -150,7 +150,7 @@
             <div class="form-group">
               <input type="hidden" name="status" class="form-control" value="Available" id="status">
             </div>
-            <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
+            <h6 class="text-danger">*Jika ISBN buku telah terdapat pada sistem, maka yang ditambah hanya nomor eksemplarnya saja </h6>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <input type="submit" class="btn btn-primary" value="Tambah Buku dan Generate QR">
@@ -166,6 +166,7 @@
   <table class="table table-striped" style="margin-left:auto; margin-right:auto; text-align:center; width: 80%; ">
     <thead style="font-weight: bold;" class="thead-dark">
       <td>ISBN Buku</td>
+      <td>No Eksemplar</td>
       <td>Judul Buku</td>
       <td>Nomor Panggil</td>
       <td>Penerbit</td>
@@ -174,7 +175,7 @@
       <td>Status</td>
       <td>QR Code</td>
       <td>Edit Buku</td>
-      <td>Hapus Buku</td>
+      <td>Hapus Eksemplar</td>
 
     </thead>
     <!-- kode php untuk ambil data buku dari database -->
@@ -182,16 +183,17 @@
     foreach ($list_buku as $rows) {
     ?>
       <tr>
-        <td><?php echo $rows->ISBN_buku ?></td>
-        <td><?php echo $rows->judul_buku ?></td>
-        <td><?php echo $rows->nomor_panggil ?></td>
-        <td><?php echo $rows->penerbit ?></td>
-        <td><?php echo $rows->tahun_terbit ?></td>
-        <td><?php echo $rows->bahasa ?></td>
+        <td id = "isbn_buku"><?php echo $rows->ISBN_buku ?></td>
+        <td id = "no_eksemplar"><?php echo $rows->no_eksemplar ?></td>
+        <td id = "judul_buku"><?php echo $rows->judul_buku ?></td>
+        <td id = "nomor_panggil"><?php echo $rows->nomor_panggil ?></td>
+        <td id = "penerbit"><?php echo $rows->penerbit ?></td>
+        <td id = "tahun_terbit"><?php echo $rows->tahun_terbit ?></td>
+        <td id = "bahasa"><?php echo $rows->bahasa ?></td>
         <td><?php echo $rows->status ?></td>
         <td><img style="width: 100px;" src="<?php echo base_url() . 'assets/img/' . $rows->qr_code; ?>"></td>
         <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku" onclick="editBuku(<?php echo $rows->ISBN_buku ?>, '<?php echo base_url('index.php') ?>')">Edit Buku</button></td>
-        <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_buku/{$rows->ISBN_buku}", 'Hapus Buku', ['class' => 'btn btn-danger btn-sm']); ?> </td>
+        <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_buku/{$rows->no_eksemplar}", 'Hapus Eksemplar', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
 
@@ -246,5 +248,9 @@
 <script>
   function editBuku(id, base_url){
     document.getElementById("editBuku").action = base_url+"/pustakawan/AturBuku_pustakawan/edit_buku/"+id;
+  }
+
+  function default_value_edit() {
+    
   }
 </script>

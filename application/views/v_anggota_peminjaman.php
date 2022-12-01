@@ -8,11 +8,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
     <?php include 'templates/header_anggota.php'; ?>
 
     <style>
@@ -314,97 +318,59 @@
     <div class="main">
         <h1 class="text-center">Peminjaman Buku</h1>
         <h3 class="text-center">Scan QR Code pada Buku untuk melakukan peminjaman</h1>
-            <div class="display-cover">
-                <video autoplay></video>
-                <canvas class="d-none"></canvas>
-                <div class="video-options">
-                    <select name="" id="" class="custom-select">
-                        <option value="">Select camera</option>
-                    </select>
-                </div>
+            <video id="preview"></video>
 
-                <img class="screenshot-image d-none" alt="">
-
-                <div class="controls">
-                    <button class="btn btn-danger play" title="Play"><i data-feather="play-circle"></i></button>
-                    <button class="btn btn-info pause d-none" title="Pause"><i data-feather="pause"></i></button>
-                    <button class="btn btn-outline-success screenshot d-none" title="ScreenShot"><i data-feather="image"></i></button>
-                </div>
-            </div>
     </div>
+    </div>
+
+
+
 </body>
-<?php include 'templates/footer_anggota.php'; ?>
-<script src="https://unpkg.com/feather-icons"></script>
-<script>
-    feather.replace();
-
-    const controls = document.querySelector('.controls');
-    const cameraOptions = document.querySelector('.video-options>select');
-    const video = document.querySelector('video');
-    const canvas = document.querySelector('canvas');
-    const screenshotImage = document.querySelector('img');
-    const buttons = [...controls.querySelectorAll('button')];
-    let streamStarted = false;
-
-    const [play, pause, screenshot] = buttons;
-
-    const constraints = {
-        video: {
-            width: {
-                min: 1280,
-                ideal: 1920,
-                max: 2560,
-            },
-            height: {
-                min: 720,
-                ideal: 1080,
-                max: 1440
-            },
-        }
-    };
-
-    const getCameraSelection = async () => {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(device => device.kind === 'videoinput');
-        const options = videoDevices.map(videoDevice => {
-            return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-        });
-        cameraOptions.innerHTML = options.join('');
-    };
-
-    play.onclick = () => {
-        if (streamStarted) {
-            video.play();
-            play.classList.add('d-none');
-            pause.classList.remove('d-none');
-            return;
-        }
-        if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
-            const updatedConstraints = {
-                ...constraints,
-                deviceId: {
-                    exact: cameraOptions.value
+<script type="text/javascript">
+    var scanner = new Instascan.Scanner({
+        video: document.getElementById('preview'),
+        scanPeriod: 5,
+        mirror: false
+    });
+    scanner.addListener('scan', function(content) {
+        alert(content);
+        //window.location.href=content;
+    });
+    Instascan.Camera.getCameras().then(function(cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+            $('[name="options"]').on('change', function() {
+                if ($(this).val() == 1) {
+                    if (cameras[0] != "") {
+                        scanner.start(cameras[0]);
+                    } else {
+                        alert('No Front camera found!');
+                    }
+                } else if ($(this).val() == 2) {
+                    if (cameras[1] != "") {
+                        scanner.start(cameras[1]);
+                    } else {
+                        alert('No Back camera found!');
+                    }
                 }
-            };
-            startStream(updatedConstraints);
+            });
+        } else {
+            console.error('No cameras found.');
+            alert('No cameras found.');
         }
-    };
-
-    const startStream = async (constraints) => {
-        constraints.video.facingMode = "environment"; //untuk buka kamera belakang
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        handleStream(stream);
-    };
-
-    const handleStream = (stream) => {
-        video.srcObject = stream;
-        play.classList.add('d-none');
-        pause.classList.remove('d-none');
-        screenshot.classList.remove('d-none');
-        streamStarted = true;
-    };
-
-    getCameraSelection();
+    }).catch(function(e) {
+        console.error(e);
+        alert(e);
+    });
 </script>
+<div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+    <label class="btn btn-primary active">
+        <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+    </label>
+    <label class="btn btn-secondary">
+        <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+    </label>
+</div>
+<?php include 'templates/footer_anggota.php'; ?>
 
 </html>
