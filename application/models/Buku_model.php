@@ -75,7 +75,7 @@ class Buku_model extends CI_Model
         if (!$keyword) {
             return null;
         }
-        $this->db->like('title', $keyword);
+        $this->db->like('judul_buku', $keyword);
         $this->db->or_like('content', $keyword);
         $query = $this->db->get($this->_table);
         return $query->result();

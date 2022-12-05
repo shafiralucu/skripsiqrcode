@@ -248,6 +248,7 @@
 <script>
   function editBuku(id, base_url){
     document.getElementById("editBuku").action = base_url+"/pustakawan/AturBuku_pustakawan/edit_buku/"+id;
+    
   }
 
   function default_value_edit() {

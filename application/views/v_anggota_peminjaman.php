@@ -319,7 +319,6 @@
         <h1 class="text-center">Peminjaman Buku</h1>
         <h3 class="text-center">Scan QR Code pada Buku untuk melakukan peminjaman</h1>
             <video id="preview"></video>
-
     </div>
     </div>
 
@@ -333,7 +332,16 @@
         mirror: false
     });
     scanner.addListener('scan', function(content) {
-        alert(content);
+        // alert('content'); 
+        $.post("StatusPinjam_Anggota/scan", {
+                id: content,
+                nama: 'shafira',
+            },
+            function(data, status) {
+                alert(status);
+                console.log(data);
+            });
+            
         //window.location.href=content;
     });
     Instascan.Camera.getCameras().then(function(cameras) {
@@ -363,6 +371,7 @@
         alert(e);
     });
 </script>
+
 <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
     <label class="btn btn-primary active">
         <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
