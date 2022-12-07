@@ -148,7 +148,7 @@
               <input type="text" name="bahasa" class="form-control" value="" id="bahasa">
             </div>
             <div class="form-group">
-              <input type="hidden" name="status" class="form-control" value="Available" id="status">
+              <input type="hidden" name="status" class="form-control" value="Tersedia" id="status">
             </div>
             <h6 class="text-danger">*Jika ISBN buku telah terdapat pada sistem, maka yang ditambah hanya nomor eksemplarnya saja </h6>
             <div class="modal-footer">
@@ -180,20 +180,23 @@
     </thead>
     <!-- kode php untuk ambil data buku dari database -->
     <?php
+    $idx = 1;
     foreach ($list_buku as $rows) {
+
     ?>
+
       <tr>
-        <td id = "isbn_buku"><?php echo $rows->ISBN_buku ?></td>
-        <td id = "no_eksemplar"><?php echo $rows->no_eksemplar ?></td>
-        <td id = "judul_buku"><?php echo $rows->judul_buku ?></td>
-        <td id = "nomor_panggil"><?php echo $rows->nomor_panggil ?></td>
-        <td id = "penerbit"><?php echo $rows->penerbit ?></td>
-        <td id = "tahun_terbit"><?php echo $rows->tahun_terbit ?></td>
-        <td id = "bahasa"><?php echo $rows->bahasa ?></td>
+        <td id="isbn_buku_view-<?php echo $idx ?>"><?php echo $rows->ISBN_buku ?></td>
+        <td id="no_eksemplar_view-<?php echo $idx ?>"><?php echo $rows->no_eksemplar ?></td>
+        <td id="judul_buku_view-<?php echo $idx ?>"><?php echo $rows->judul_buku ?></td>
+        <td id="nomor_panggil_view-<?php echo $idx ?>"><?php echo $rows->nomor_panggil ?></td>
+        <td id="penerbit_view-<?php echo $idx ?>"><?php echo $rows->penerbit ?></td>
+        <td id="tahun_terbit_view-<?php echo $idx ?>"><?php echo $rows->tahun_terbit ?></td>
+        <td id="bahasa_view-<?php echo $idx ?>"><?php echo $rows->bahasa ?></td>
         <td><?php echo $rows->status ?></td>
         <td><img style="width: 100px;" src="<?php echo base_url() . 'assets/img/' . $rows->qr_code; ?>"></td>
-        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku" onclick="editBuku(<?php echo $rows->ISBN_buku ?>, '<?php echo base_url('index.php') ?>')">Edit Buku</button></td>
-        <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_buku/{$rows->no_eksemplar}", 'Hapus Eksemplar', ['class' => 'btn btn-danger btn-sm']); ?> </td>
+        <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalEditBuku" onclick="editBuku(<?php echo $idx ?>, '<?php echo base_url('index.php') ?>')">Edit Buku</button></td>
+        <td><?php echo anchor("pustakawan/AturBuku_Pustakawan/delete_eksemplar/{$rows->no_eksemplar}", 'Hapus Eksemplar', ['class' => 'btn btn-danger btn-sm']); ?> </td>
         </form>
 
 
@@ -211,23 +214,23 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Judul Buku</label>
-                    <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku">
+                    <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku_edit">
                   </div>
                   <div class="form-group">
                     <label>Nomor Panggil</label>
-                    <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil">
+                    <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil_edit">
                   </div>
                   <div class="form-group">
                     <label>Penerbit</label>
-                    <input type="text" name="penerbit" class="form-control" value="" id="penerbit">
+                    <input type="text" name="penerbit" class="form-control" value="" id="penerbit_edit">
                   </div>
                   <div class="form-group">
                     <label>Tahun Terbit</label>
-                    <input type="text" name="tahun" class="form-control" value="" id="tahun">
+                    <input type="text" name="tahun" class="form-control" value="" id="tahun_edit">
                   </div>
                   <div class="form-group">
                     <label>Bahasa</label>
-                    <input type="text" name="bahasa" class="form-control" value="" id="bahasa">
+                    <input type="text" name="bahasa" class="form-control" value="" id="bahasa_edit">
                   </div>
                   <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
                   <div class="modal-footer">
@@ -240,18 +243,24 @@
         </div>
         </div>
       </tr>
-    <?php } ?>
+    <?php $idx++;
+    } ?>
   </table>
 
 </html>
 
 <script>
-  function editBuku(id, base_url){
-    document.getElementById("editBuku").action = base_url+"/pustakawan/AturBuku_pustakawan/edit_buku/"+id;
-    
+  function editBuku(id, base_url) {
+    document.getElementById("judul_buku_edit").value = document.getElementById("judul_buku_view-" + id).innerText;
+    document.getElementById("nomor_panggil_edit").value = document.getElementById("nomor_panggil_view-" + id).innerText;
+    document.getElementById("penerbit_edit").value = document.getElementById("penerbit_view-" + id).innerText;
+    document.getElementById("tahun_edit").value = document.getElementById("tahun_terbit_view-" + id).innerText;
+    document.getElementById("bahasa_edit").value = document.getElementById("bahasa_view-" + id).innerText;
+    let isbn = document.getElementById("isbn_buku_view-" + id).innerText;
+    document.getElementById("editBuku").action = base_url + "/pustakawan/AturBuku_pustakawan/edit_buku/" + isbn;
   }
 
   function default_value_edit() {
-    
+
   }
 </script>

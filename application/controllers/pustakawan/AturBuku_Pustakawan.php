@@ -7,6 +7,7 @@ class AturBuku_Pustakawan extends CI_Controller
     {
         parent::__construct();
         $this->load->model("Buku_model");
+        $this->load->model("Eksemplar_model");
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -29,8 +30,9 @@ class AturBuku_Pustakawan extends CI_Controller
 
         //cek apakah isbn telah tersedia di tabel buku
         $buku_tersedia = $this->Buku_model->get_buku_by_isbn($isbn_buku);
-        if ($buku_tersedia == null) { //jika buku belum tersedia
-            //tambah buku ke tabel buku
+
+        if (empty($buku_tersedia)) {
+            // insert book
             $data['isbn_buku'] = $isbn_buku;
             $data['judul_buku'] = $judul_buku;
             $data['nomor_panggil'] = $nomor_panggil;
@@ -38,109 +40,57 @@ class AturBuku_Pustakawan extends CI_Controller
             $data['tahun'] = $tahun;
             $data['bahasa'] = $bahasa;
 
-            //tambah eksemplar+generate qr code sesuai eksemplar
-            //untuk generate qr code
-            $config['cacheable']    = true; //boolean, the default is true
-            $config['cachedir']     = './assets/'; //string, the default is application/cache/
-            $config['errorlog']     = './assets/'; //string, the default is application/logs/
-            $config['imagedir']     = './assets/img/'; //direktori penyimpanan qr code
-            $config['quality']      = true; //boolean, the default is true
-            $config['size']         = '1024'; //interger, the default is 1024
-            $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
-            $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
-            $this->ciqrcode->initialize($config);
-
-            //ambil no eksemplar terakhir pada tabel eksemplar
-            $no_eksemplar = $this->Buku_model->get_auto_increment_no_eksemplar();
-
-            $data_eksemplar['status'] = $status;
-            $data_eksemplar['no_eksemplar'] = $no_eksemplar;
-            //get isbn buku
-            $data_eksemplar['isbn_buku'] = $isbn_buku;
-
-            //buat nama dari qr code sesuai dengan isbn buku
-            $image_name = $no_eksemplar . '.png';
-            $params['data'] = $no_eksemplar; //data yang akan di jadikan QR CODE
-            $params['level'] = 'H'; //H = High
-            $params['size'] = 10;
-            $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
-            $this->ciqrcode->generate($params); //fungsi untuk generate QR CODE
-
-            $data['qr_code'] = $image_name;
             $this->Buku_model->add_buku($data);
-            $this->Buku_model->add_eksemplar($data_eksemplar);
-
-            $data['list_buku'] = $this->Buku_model->show_buku();
-
-            //tampilkan semua ke view
-            $data_view['isbn_buku'] = $isbn_buku;
-            $data_view['judul_buku'] = $judul_buku;
-            $data_view['nomor_panggil'] = $nomor_panggil;
-            $data_view['penerbit'] = $penerbit;
-            $data_view['tahun'] = $tahun;
-            $data_view['bahasa'] = $bahasa;
-            $data_view['status'] = $status;
-            $data_view['no_eksemplar'] = $no_eksemplar;
-            $data_view['qr_code'] = $image_name;
-
-
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Buku berhasil dimasukkan!</div>');
-            $this->load->view('v_pustakawan_edit_buku', $data_view);
-        } else { //jika buku sudah tersedia dalam tabel buku
-            //tambah eksemplar+generate qr code sesuai eksemplar
-            //untuk generate qr code
-            $config['cacheable']    = true; //boolean, the default is true
-            $config['cachedir']     = './assets/'; //string, the default is application/cache/
-            $config['errorlog']     = './assets/'; //string, the default is application/logs/
-            $config['imagedir']     = './assets/img/'; //direktori penyimpanan qr code
-            $config['quality']      = true; //boolean, the default is true
-            $config['size']         = '1024'; //interger, the default is 1024
-            $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
-            $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
-            $this->ciqrcode->initialize($config);
-
-            //get isbn buku
-            $data['isbn_buku'] = $isbn_buku;
-
-            //ambil no eksemplar terakhir pada tabel eksemplar
-            $no_eksemplar = $this->Buku_model->get_auto_increment_no_eksemplar();
-
-            $data['no_eksemplar'] = $no_eksemplar;
-            $data['status'] = $status;
-            //buat nama dari qr code sesuai dengan isbn buku
-            $image_name = $no_eksemplar . '.png';
-            $params['data'] = $no_eksemplar; //data yang akan di jadikan QR CODE
-            $params['level'] = 'H'; //H = High
-            $params['size'] = 10;
-            $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
-            $this->ciqrcode->generate($params); //fungsi untuk generate QR CODE
-
-            $data['qr_code'] = $image_name;
-            $this->Buku_model->add_eksemplar($data);
-
-            $data_view['list_buku'] = $this->Buku_model->join_buku_eksemplar();
-            //tampilkan semua ke view
-            $data_view['isbn_buku'] = $isbn_buku;
-            $data_view['judul_buku'] = $judul_buku;
-            $data_view['nomor_panggil'] = $nomor_panggil;
-            $data_view['penerbit'] = $penerbit;
-            $data_view['tahun'] = $tahun;
-            $data_view['bahasa'] = $bahasa;
-            $data_view['status'] = $status;
-            $data_view['no_eksemplar'] = $no_eksemplar;
-            $data_view['qr_code'] = $image_name;
-
-
-            $this->session->set_flashdata('message', '<div class="alert alert-success">Buku berhasil dimasukkan!</div>');
-            $this->load->view('v_pustakawan_edit_buku', $data_view);
         }
+
+        $no_eks = $this->Eksemplar_model->get_no_eks_to_qr($isbn_buku)->no_eksemplar;
+
+
+        $data_eksemplar = [];
+        if (empty($no_eks)) {
+            $data_eksemplar['no_eksemplar'] = 1;
+        } else {
+            $data_eksemplar['no_eksemplar'] = $no_eks + 1;
+        }
+
+        $config['cacheable']    = true; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/img/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+
+        $concat_no_eks_isbn = $data_eksemplar['no_eksemplar'] . ' ' . $isbn_buku;
+        $image_name = $concat_no_eks_isbn . '.png';
+        $data_eksemplar['isbn_buku'] = $isbn_buku;
+        $data_eksemplar['status'] = $status;
+
+        //buat nama dari qr code sesuai dengan isbn buku
+        $params['data'] = $concat_no_eks_isbn; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H = High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+        $this->ciqrcode->generate($params); //fungsi untuk generate QR CODE
+
+
+        $data_eksemplar['qr_code'] = $image_name;
+
+
+        $this->Eksemplar_model->add_eksemplar($data_eksemplar);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Buku berhasil dimasukkan </div>');
+        redirect('/pustakawan/AturBuku_Pustakawan', 'refresh');
+       
     }
 
-    public function delete_buku($ISBN_buku)
+    public function delete_eksemplar($no_eksemplar)
     {
-        if ($this->Buku_model->delete_buku($ISBN_buku)) {
+        if ($this->Eksemplar_model->delete_eksemplar($no_eksemplar)) {
             $this->session->set_flashdata('deleted', '<div class="alert alert-success">Data Buku telah terhapus.</div>');
-            redirect('pustakawan/AturBuku_pustakawan', 'refresh');
+            redirect('/pustakawan/AturBuku_pustakawan', 'refresh');
         } else {
             $this->session->set_flashdata('deleted', '<div class="alert alert-danger">Gagal menghapus data buku.</div>');
             redirect('pustakawan/AturBuku_pustakawan', 'refresh');

@@ -62,6 +62,7 @@ class AturAnggota_Pustakawan extends CI_Controller
 		//get id yang mau di edit
 		// $id_edit = $this->input->post('id_edit');
         $id_edit = $id;
+        
 		$nama = $this->input->post('nama');
         $password = $this->input->post('password');
         $email = $this->input->post('emailanggota');
