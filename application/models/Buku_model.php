@@ -39,13 +39,7 @@ class Buku_model extends CI_Model
     }
 
 
-    public function update_status_buku_pinjam($no_eksemplar, $ISBN_buku)
-	{
-		$this->db->set('status', 'Tidak Tersedia');
-        $this->db->where('no_eksemplar', $no_eksemplar);
-		$this->db->where('ISBN_buku', $ISBN_buku);
-		$this->db->update('eksemplar');
-	}
+   
 
 
 }

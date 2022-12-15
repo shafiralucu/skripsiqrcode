@@ -95,7 +95,7 @@
 
 
   <div id="lihat_jadwal">
-    <h2><b>CRUD Buku</b></h2>
+    <h2><b>Atur buku</b></h2>
     <h4>Halaman untuk menambah, menghapus dan mengedit buku</h4>
   </div>
   <br>

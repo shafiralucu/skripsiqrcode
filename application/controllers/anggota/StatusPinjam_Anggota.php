@@ -2,23 +2,22 @@
 class StatusPinjam_Anggota extends CI_Controller
 {
 
-    //DEFAULT CONTROLLER
     public function __construct()
     {
         parent::__construct();
         $this->load->model("User_model");
         $this->load->model("Buku_model");
+        $this->load->model("Eksemplar_model");
+        $this->load->model("Peminjaman_model");
         $this->load->library('form_validation');
         $this->load->library('session');
     }
 
     public function index()
     {
-        $this->load->view('v_anggota_status_peminjaman');
+        $this->load->view('v_anggota_status_peminjaman_sukses');
     }
 
-    //satu function untuk nerima data dari js
-    //rute baru
     public function scan()
     {
         $hasil_qr_code = $this->input->post('id');
@@ -26,26 +25,25 @@ class StatusPinjam_Anggota extends CI_Controller
         $no_eksemplar = $result[0];
         $isbn_buku = $result[1];
 
-        // echo $this->input->post('id');
-        // echo $this->input->post($no_eksemplar);
-        // echo $this->input->post($isbn_buku);
-        // //kayak return
-        // $this->output->set_output(json_encode($this->input->post('id')));
-        // $this->output->set_output(json_encode($no_eksemplar));
-        // $this->output->set_output(json_encode($isbn_buku));
-        //split 2 variable, jadi isbn buku dan nomor eksemplar
-        //lempar isbn dan nomor eksemplar ke model
-        // $this->Scan_model->update_status_buku_pinjam($hasil_qr_code);
-        //redirect
+        if ($this->Eksemplar_model->update_status_eksemplar_pinjam($no_eksemplar, $isbn_buku)) {
+            
+            $data = [];
+            $data['status_pinjam'] = "Dipinjam";
 
-        
+            date_default_timezone_set('Asia/Jakarta');
+            $now = new \Datetime('now');
+            $date_peminjaman = (array) new \DateTime('now');
+            $data['date_peminjaman'] = substr($date_peminjaman['date'],0,10);
 
-        if ($this->Buku_model->update_status_buku_pinjam($no_eksemplar, $isbn_buku)) {
-            //tambah ditabel peminjaman
-            $this->load->view('v_anggota_status_peminjaman_sukses');
+            $date_pengembalian = (array) date_add($now, date_interval_create_from_date_string("3 days"));
+            $data['id_anggota'] = $this->session->userdata('id_anggota');
+            $data['date_pengembalian'] = substr($date_pengembalian['date'],0,10);
+            $data['id_eksemplar'] = $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id;
+            
+            $this->Peminjaman_model->add_peminjaman($data);
+            echo 'true';
         } else {
-            $this->session->set_flashdata('updated', '<div class="alert alert-danger">Gagal melakukan proses peminjaman buku.</div>');
-            redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');
+            echo 'false';
         }
     }
 }

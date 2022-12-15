@@ -130,7 +130,7 @@
 			</li>
 		</ul>
 
-		<!-- Tab panes -->/
+		<!-- Tab panes -->
 		<div class="tab-content">
 			<div id="loginanggota" class="container tab-pane"><br>
 				<div class="col-md-6 .offset-md-3 login-form-1">

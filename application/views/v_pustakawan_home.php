@@ -188,39 +188,9 @@
 </head>
 
 <body>
-    <div id="demo" class="carousel slide" data-ride="carousel">
-
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-        </ul>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="<?= base_url('assets/'); ?>img/la.jpg" alt="Los Angeles">
-            </div>
-            <div class="carousel-item">
-                <img src="<?= base_url('assets/'); ?>img/chicago.jpg" alt="Chicago">
-            </div>
-            <div class="carousel-item">
-                <img src="<?= base_url('assets/'); ?>img/ny.jpg" alt="New York">
-            </div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
-    </div>
 
     <br> 
-    <h1 class="display-5 text-center">Selamat datang, Lionov!</h1>
+    <h1 class="display-5 text-center px-3 py-3 pt-md-5 pb-md-4 mx-auto" style="margin-top: 3%; margin-bottom: -5px">Selamat datang, <?php echo $this->session->userdata('nama') ?>!</h1>
     <div class="container">
         <div class="card-deck mb-3 text-center">
             <div class="card mb-8 box-shadow">

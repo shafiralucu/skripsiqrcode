@@ -1,7 +1,9 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
-  </head>
+    <?php include 'templates/header_anggota.php'; ?>
+
+
     <style>
       body {
         text-align: center;
@@ -36,13 +38,17 @@
         margin: 0 auto;
       }
     </style>
+ 
+  </head>
+  
     <body>
       <div class="card">
       <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
         <i class="checkmark">✓</i>
       </div>
-        <h1>Success</h1> 
-        <p>We received your purchase request;<br/> we'll be in touch shortly!</p>
+        <h1>Peminjaman Sukses</h1> 
+        <p>Kami telah menerima data peminjaman anda<br/> Jangan lupa mengembalikan buku sesuai dengan waktu pengembalian!</p>
       </div>
     </body>
+    
 </html>

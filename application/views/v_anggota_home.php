@@ -207,6 +207,7 @@
   <!-- search box -->
   <div class="main">
     <h1 class="text-center">Sistem Peminjaman Buku di Perpustakaan dengan QR Code</h1>
+    <h1 class="display-5 text-center px-3 py-3 pt-md-5 pb-md-4 mx-auto" style="margin-top: 3%; margin-bottom: -5px">Selamat datang, <?php echo $this->session->userdata('nama') ?>!</h1>
 
     <br>
     <br>
@@ -230,12 +231,16 @@
           <?php if (!empty($keyword)) { ?>
             <p style="color:orange"><b>Menampilkan data buku dengan kata kunci: "<?= $keyword; ?>"</b></p>
           <?php } ?>
-          <table class="table">
+          <table class="table table-striped" style="margin-left:auto; margin-right:auto; text-align:center; width: 80%; ">
             <thead>
               <tr>
+              <thead style="font-weight: bold;" class="thead-dark">
                 <th scope="col">ISBN Buku</th>
                 <th scope="col">Judul Buku</th>
                 <th scope="col">Bahasa</th>
+                <th scope="col">Jumlah Eksemplar Tersedia</th>
+                <th scope="col">Status</th>
+          </thead>
               </tr>
             </thead>
             <tbody>
@@ -244,6 +249,9 @@
                   <th scope="row"><?= $row['ISBN_buku'] ?></th>
                   <td><?= $row['judul_buku'] ?></td>
                   <td><?= $row['bahasa'] ?></td>
+                  <td><?= $row['jumlah'] ?></td>
+                  <td><?= $row['status'] ?></td>
+
                 </tr>
               <?php } ?>
             </tbody>

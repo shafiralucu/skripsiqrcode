@@ -332,14 +332,17 @@
         mirror: false
     });
     scanner.addListener('scan', function(content) {
-        // alert('content'); 
         $.post("StatusPinjam_Anggota/scan", {
-                id: content,
+                id: content, //qr
                 nama: 'shafira',
             },
-            function(data, status) {
-                alert(status);
-                console.log(data);
+            function(data, status, response) {
+                if (data.trim() == 'true') {
+                    window.location.href = "<?php echo site_url('anggota/StatusPinjam_Anggota'); ?>";
+                } else {
+                    alert('Proses peminjaman gagal!');
+                }
+                console.log(response);
             });
             
         //window.location.href=content;

@@ -9,6 +9,7 @@ class AturBuku_Pustakawan extends CI_Controller
         $this->load->model("Buku_model");
         $this->load->model("Eksemplar_model");
         $this->load->library('form_validation');
+        $this->load->library('ciqrcode');
         $this->load->library('session');
     }
 
