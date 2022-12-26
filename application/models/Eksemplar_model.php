@@ -72,4 +72,7 @@ class Eksemplar_model extends CI_Model
         $this->db->where('ISBN_buku', $ISBN_buku);
         return $this->db->get()->row()->status;
     }
+    
+
+
 }

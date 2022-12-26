@@ -19,23 +19,21 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link"  href="<?= site_url('pustakawan/Home_Pustakawan') ?>">Home</a>
+        <a class="nav-link"  href="<?= site_url('anggota/Home_Anggota') ?>">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= site_url('pustakawan/AturBuku_Pustakawan') ?>">Atur Buku</a>
+        <a class="nav-link" href="<?= site_url('anggota/StatusPinjam_Anggota') ?>">Peminjaman Buku</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="<?= site_url('pustakawan/AturAnggota_Pustakawan') ?>">Atur Anggota</a>
+        <a class="nav-link" href="<?= site_url('anggota/ScanKembalikan_Anggota') ?>">Pengembalian Buku</a>
       </li>    
       <li class="nav-item">
-        <a class="nav-link" href="<?= site_url('pustakawan/Histori_Pustakawan') ?>">Daftar Peminjaman</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-primary" href="<?= site_url('Login/logout') ?>">Logout</a>
+        <a class="nav-link" href="<?= site_url('Login/logout') ?>">Logout</a>
       </li>   
     </ul>
   </div>  
 </nav>
+<br>
 
 
 </body>

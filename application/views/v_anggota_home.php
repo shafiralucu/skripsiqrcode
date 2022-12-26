@@ -9,11 +9,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <?php include 'templates/header_anggota.php'; ?>
+  <?php include 'templates/header_anggota_new.php'; ?>
 
   <style>
     .main {
@@ -204,63 +205,66 @@
 </head>
 
 <body>
-  <!-- search box -->
-  <div class="main">
-    <h1 class="text-center">Sistem Peminjaman Buku di Perpustakaan dengan QR Code</h1>
-    <h1 class="display-5 text-center px-3 py-3 pt-md-5 pb-md-4 mx-auto" style="margin-top: 3%; margin-bottom: -5px">Selamat datang, <?php echo $this->session->userdata('nama') ?>!</h1>
+  <div>
+    <h1 class="display-5 text-center px-3 py-3 pt-md-5 pb-md-4 mx-auto">Selamat datang, <?php echo $this->session->userdata('nama') ?>!</h1>
+    <h3 class="text-center">Buku yang belum anda kembalikan:</h2>
+      <br>
+      <h5 class="text-center text-danger">
+        <?php
+        foreach ($list_peminjaman_anggota as $rows) {
+        ?>
+          <?php echo '<b>' . $rows->judul_buku . '</b>'?> <br>
+          <?php echo 'Tanggal Peminjaman: ' .  $rows->tanggal_peminjaman ?> dan
+          <?php echo 'Tanggal Pengembalian: ' . $rows->tanggal_pengembalian ?> <br>
+          <?php echo 'Status Peminjaman: ' . $rows->status_pinjam ?> <br>
+        <?php } ?>
+      </h5>
+  </div>
 
-    <br>
-    <br>
-    <div class="container">
-      <div class="row" style="margin-top: 50px">
-        <div class="col-xs-4 col-xs-offset-4">
-          <form action="<?= base_url('index.php/anggota/Home_Anggota/index/') ?>" method="get">
-            <div class="input-group">
-              <input type="text" class="form-control" name="keyword" placeholder="Masukan Kata Kunci...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">Cari</button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-4 col-xs-offset-4 text-center">
-          <h3>Data Buku</h3>
-          <h5>*anda hanya bisa melakukan pencarian dengan judul buku</h5>
-          <?php if (!empty($keyword)) { ?>
-            <p style="color:orange"><b>Menampilkan data buku dengan kata kunci: "<?= $keyword; ?>"</b></p>
-          <?php } ?>
-          <table class="table table-striped" style="margin-left:auto; margin-right:auto; text-align:center; width: 80%; ">
-            <thead>
-              <tr>
-              <thead style="font-weight: bold;" class="thead-dark">
-                <th scope="col">ISBN Buku</th>
-                <th scope="col">Judul Buku</th>
-                <th scope="col">Bahasa</th>
-                <th scope="col">Jumlah Eksemplar Tersedia</th>
-                <th scope="col">Status</th>
-          </thead>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($data as $row) { ?>
-                <tr>
-                  <th scope="row"><?= $row['ISBN_buku'] ?></th>
-                  <td><?= $row['judul_buku'] ?></td>
-                  <td><?= $row['bahasa'] ?></td>
-                  <td><?= $row['jumlah'] ?></td>
-                  <td><?= $row['status'] ?></td>
-
-                </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <form action="<?= base_url('index.php/anggota/Home_Anggota/index/') ?>" method="get">
+          <div class="input-group">
+            <input type="text" class="form-control" name="keyword" placeholder="Masukan Kata Kunci...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">Cari</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
-
   </div>
+
+
+  <div class="row">
+    <div class="col-xl-12 col-xl-offset-12 text-center">
+      <h2>Data Buku</h2>
+      <h5>*anda hanya bisa melakukan pencarian dengan judul buku</h5>
+      <?php if (!empty($keyword)) { ?>
+        <p style="color:orange"><b>Menampilkan data buku dengan kata kunci: "<?= $keyword; ?>"</b></p>
+      <?php } ?>
+      <table class="table table-striped" style="margin-left:auto; margin-right:auto; text-align:center; width: 100%; ">
+        <thead style="font-weight: bold;" class="thead-dark">
+          <td>ISBN Buku</td>
+          <td>Judul Buku</td>
+          <td>Bahasa</td>
+          <td>Status</td>
+        </thead>
+        <?php foreach ($data as $row) { ?>
+          <tr>
+            <th scope="row"><?= $row['ISBN_buku'] ?></th>
+            <td><?= $row['judul_buku'] ?></td>
+            <td><?= $row['bahasa'] ?></td>
+            <td><?= $row['status'] ?></td>
+          </tr>
+        <?php } ?>
+        </td>
+      </table>
+    </div>
+  </div>
+
+
 
   <!-- card pinjam dan pengembalian buku -->
   <div class="container">
@@ -278,7 +282,7 @@
           <h5>Scan QR untuk peminjaman buku disini</h5>
           <br>
           <br>
-          <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url(); ?>index.php/anggota/ScanPinjam_Anggota'">Pinjam Buku</button>
+          <button type="button" class="btn btn-lg btn-block btn-dark" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url(); ?>index.php/anggota/StatusPinjam_Anggota'">Pinjam Buku</button>
         </div>
       </div>
       <div class="card mb-8 box-shadow">
@@ -294,16 +298,15 @@
           <h5>Scan QR untuk pengembalian buku disini</h5>
           <br>
           <br>
-          <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url(); ?>index.php/anggota/ScanKembalikan_Anggota'">Pengembalian buku</button>
+          <button type="button" class="btn btn-lg btn-block btn-dark" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url(); ?>index.php/anggota/ScanKembalikan_Anggota'">Pengembalian buku</button>
         </div>
       </div>
-
     </div>
-
-
   </div>
 
 </body>
+
+
 <?php include 'templates/footer_anggota.php'; ?>
 
 </html>

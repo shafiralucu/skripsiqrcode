@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
-    <?php include 'templates/header_anggota.php'; ?>
+    <?php include 'templates/header_anggota_new.php'; ?>
 
     <style>
         .main {
@@ -297,8 +297,9 @@
         <video id="preview"></video>
         </div>
     </div>
-</body>
-<script type="text/javascript">
+
+
+    <script type="text/javascript">
     var scanner = new Instascan.Scanner({
         video: document.getElementById('preview'),
         scanPeriod: 5,
@@ -351,6 +352,7 @@
     });
 </script>
 
+<div class="col-md-12 text-center">
 <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
     <label class="btn btn-primary active">
         <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
@@ -359,6 +361,9 @@
         <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
     </label>
 </div>
+</div>
+</body>
+
 <?php include 'templates/footer_anggota.php'; ?>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-class Login extends CI_Controller
+class Login_Pustakawan extends CI_Controller
 {
 
     //DEFAULT CONTROLLER
@@ -14,18 +14,18 @@ class Login extends CI_Controller
 
     public function index()
     {
-            $this->load->view('v_login');
+            $this->load->view('v_login_pustakawan');
     }
 
-    //fungsi login anggota
-    public function attempt_anggota_login()
-    {
-        $email_anggota = $this->input->post('email_anggota');
-        $password_anggota = $this->input->post('password_anggota');
 
-        $this->User_model->attempt_anggota($email_anggota, $password_anggota);
-    }
-
+     //fungsi login pustakawan
+     public function attempt_pustakawan_login()
+     {
+         $email_pustakawan = $this->input->post('email_pustakawan');
+         $password_pustakawan = $this->input->post('password_pustakawan');
+ 
+         $this->User_model->attempt_pustakawan($email_pustakawan, $password_pustakawan);
+     }
 
     //fungsi logout dan destroy session
     public function logout()

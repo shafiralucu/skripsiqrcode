@@ -15,7 +15,10 @@ class StatusPinjam_Anggota extends CI_Controller
 
     public function index()
     {
-        $this->load->view('v_anggota_status_peminjaman_sukses');
+        // $id_anggota = $this->session->userdata('id_anggota');
+        // $id_eksemplar = $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id;
+        // $data['detail_peminjaman_buku'] = $this->Peminjaman_model->get_detail_buku($id_eksemplar, $id_anggota);
+        $this->load->view('v_anggota_peminjaman');
     }
 
     public function scan()
@@ -41,6 +44,15 @@ class StatusPinjam_Anggota extends CI_Controller
             $data['id_eksemplar'] = $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id;
             
             $this->Peminjaman_model->add_peminjaman($data);
+
+            //simpan di session untuk dilempar ke halaman sukses
+            $data_buku_dipinjam = array(
+                'id_anggota_pinjam' => $this->session->userdata('id_anggota'),
+                'id_eksemplar' => $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id,
+                'tanggal_peminjaman' => substr($date_peminjaman['date'],0,10)
+
+            );
+            $this->session->set_userdata('data_buku_dipinjam', $data_buku_dipinjam); 
             echo 'true';
         } else {
             echo 'false';

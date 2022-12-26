@@ -148,16 +148,16 @@
                   ?>
           </h4>
           </div>
-            <form action="<?= site_url('Login/attempt_anggota_login') ?>" method="post">
+            <form action="<?= site_url('Login_Pustakawan/attempt_pustakawan_login') ?>" method="post">
               <div class="form-floating mb-3">
-              <label for="floatingInput">Email Anggota</label>
-              <input type="text" class="form-control" id="floatingInput" name="email_anggota" placeholder="name@example.com" value="<?php echo set_value('email'); ?>" required>
+              <label for="floatingInput">Email Pustakawan</label>
+              <input type="text" class="form-control" id="floatingInput" name="email_pustakawan" placeholder="name@example.com" value="<?php echo set_value('email'); ?>" required>
               <span class="text-danger"><?php echo form_error('email'); ?></span>
               </div>
 
               <div class="form-floating mb-3">
               <label for="floatingPassword">Password</label>
-              <input type="password" class="form-control" id="floatingPassword" name="password_anggota" placeholder="Password" value="<?php echo set_value('email'); ?>" required>
+              <input type="password" class="form-control" id="floatingPassword" name="password_pustakawan" placeholder="Password" value="<?php echo set_value('email'); ?>" required>
               <span class="text-danger"><?php echo form_error('email'); ?></span>
               </div>
 
@@ -165,7 +165,7 @@
               <input type="submit" name="login" class="btn btn-info" value="Login">
 			  <br>
 			  <br>
-			  <a href="<?php echo site_url('Login_Pustakawan') ?>">Klik disini untuk login pustakawan</a>
+			  <a href="<?php echo site_url('Login') ?>">Klik disini untuk login anggota</a>
               </div>
             </form>
           </div>
@@ -173,6 +173,7 @@
       </div>
     </div>
   </div>
+
 
 
 

@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    
 
-    <?php include 'templates/header_anggota.php'; ?>
+    <?php include 'templates/header_anggota_new.php'; ?>
 
     <style>
         .main {
@@ -316,73 +317,77 @@
 
 <body>
     <div class="main">
-        <h1 class="text-center">Peminjaman Buku</h1>
-        <h3 class="text-center">Scan QR Code pada Buku untuk melakukan peminjaman</h1>
+        <h3 class="text-center">Peminjaman Buku</h3>
+        <h5 class="text-center">Scan QR Code pada Buku untuk melakukan peminjaman</h5>
             <video id="preview"></video>
     </div>
+
+    <script type="text/javascript">
+        var scanner = new Instascan.Scanner({
+            video: document.getElementById('preview'),
+            scanPeriod: 5,
+            mirror: false
+        });
+        scanner.addListener('scan', function(content) {
+            $.post("StatusPinjam_Anggota/scan", {
+                    id: content, //qr
+                    nama: 'shafira',
+                },
+                function(data, status, response) {
+                    if (data.trim() == 'true') {
+                        window.location.href = "<?php echo site_url('anggota/Sukses_Anggota'); ?>";
+                    } else {
+                        alert('Proses peminjaman gagal!');
+                    }
+                    console.log(response);
+                });
+
+            //window.location.href=content;
+        });
+        Instascan.Camera.getCameras().then(function(cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+                $('[name="options"]').on('change', function() {
+                    if ($(this).val() == 1) {
+                        if (cameras[0] != "") {
+                            scanner.start(cameras[0]);
+                        } else {
+                            alert('No Front camera found!');
+                        }
+                    } else if ($(this).val() == 2) {
+                        if (cameras[1] != "") {
+                            scanner.start(cameras[1]);
+                        } else {
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            } else {
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function(e) {
+            console.error(e);
+            alert(e);
+        });
+    </script>
+
+    <div class="col-md-12 text-center">
+        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+            </label>
+        </div>
     </div>
 
 
 
 </body>
-<script type="text/javascript">
-    var scanner = new Instascan.Scanner({
-        video: document.getElementById('preview'),
-        scanPeriod: 5,
-        mirror: false
-    });
-    scanner.addListener('scan', function(content) {
-        $.post("StatusPinjam_Anggota/scan", {
-                id: content, //qr
-                nama: 'shafira',
-            },
-            function(data, status, response) {
-                if (data.trim() == 'true') {
-                    window.location.href = "<?php echo site_url('anggota/StatusPinjam_Anggota'); ?>";
-                } else {
-                    alert('Proses peminjaman gagal!');
-                }
-                console.log(response);
-            });
-            
-        //window.location.href=content;
-    });
-    Instascan.Camera.getCameras().then(function(cameras) {
-        if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-            $('[name="options"]').on('change', function() {
-                if ($(this).val() == 1) {
-                    if (cameras[0] != "") {
-                        scanner.start(cameras[0]);
-                    } else {
-                        alert('No Front camera found!');
-                    }
-                } else if ($(this).val() == 2) {
-                    if (cameras[1] != "") {
-                        scanner.start(cameras[1]);
-                    } else {
-                        alert('No Back camera found!');
-                    }
-                }
-            });
-        } else {
-            console.error('No cameras found.');
-            alert('No cameras found.');
-        }
-    }).catch(function(e) {
-        console.error(e);
-        alert(e);
-    });
-</script>
 
-<div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-    <label class="btn btn-primary active">
-        <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
-    </label>
-    <label class="btn btn-secondary">
-        <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
-    </label>
-</div>
+
 <?php include 'templates/footer_anggota.php'; ?>
 
 </html>

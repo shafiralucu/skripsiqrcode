@@ -110,7 +110,7 @@
         <div id="mySidenav" class="sidenav">
             
         </div>
-        <span style="font-size:30px;cursor:pointer; margin-right: 1%; color: white;" onclick="openNav()">&#9776;</span>
+        <!-- <span style="font-size:30px;cursor:pointer; margin-right: 1%; color: white;" onclick="openNav()">&#9776;</span> -->
 
         <!-- Links -->
         <a id="judul">Sistem Peminjaman Buku di Perpustakaan dengan QR Code</a>

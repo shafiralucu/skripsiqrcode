@@ -2,12 +2,13 @@
 class AturAnggota_Pustakawan extends CI_Controller
 {
 
-    //DEFAULT CONTROLLER
     public function __construct()
     {
         parent::__construct();
         $this->load->model("User_model");
         $this->load->model("Anggota_model");
+        $this->load->model("Mengelola_model");
+
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -20,9 +21,8 @@ class AturAnggota_Pustakawan extends CI_Controller
 
     public function add_anggota()
     {
-
         $nama = $this->input->post('nama');
-        $password = $this->input->post('password');
+        $password = password_hash($this->input->post('password'),PASSWORD_DEFAULT);
         $email = $this->input->post('emailanggota');
         $alamat = $this->input->post('alamat');
         $no_telepon = $this->input->post('no_telepon');
@@ -38,10 +38,15 @@ class AturAnggota_Pustakawan extends CI_Controller
 
         $this->Anggota_model->add_anggota($data);
 
+        $data_mengelola['id_pustakawan'] = $this->session->userdata('id_pustakawan');
+        $data_mengelola['id_anggota'] = $this->Mengelola_model->get_last_inserted_id();
+
+        $this->Mengelola_model->add_mengelola($data_mengelola);
+
         
         $data['list_anggota'] = $this->Anggota_model->show_anggota();
         $this->session->set_flashdata('message', '<div class="alert alert-success">Data anggota berhasil dimasukkan!</div>');
-        $this->load->view('v_pustakawan_edit_anggota', $data);
+        redirect('pustakawan/AturAnggota_pustakawan', 'refresh');
     }
 
     public function delete_anggota($id)
@@ -56,11 +61,8 @@ class AturAnggota_Pustakawan extends CI_Controller
     }
 
 
-    //fungsi edit anggota
 	public function edit_anggota($id)
 	{
-		//get id yang mau di edit
-		// $id_edit = $this->input->post('id_edit');
         $id_edit = $id;
         
 		$nama = $this->input->post('nama');
@@ -78,8 +80,6 @@ class AturAnggota_Pustakawan extends CI_Controller
 			'alamat' => $alamat
 		);
 
-
-		//jika anggota berhasil diedit
 		if ($this->Anggota_model->edit_anggota($id_edit, $data)) {
 			$this->session->set_flashdata('updated', '<div class="alert alert-success">Data anggota telah berhasil di-update.</div>');
             redirect('pustakawan/AturAnggota_Pustakawan', 'refresh');

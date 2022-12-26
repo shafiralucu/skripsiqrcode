@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Home Pustakawan</title>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -207,7 +207,7 @@
                     <h7>Anda bisa tambah, hapus dan edit anggota di halaman ini</h7>
                     <br>
                     <br>
-                    <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url(); ?>index.php/pustakawan/AturAnggota_Pustakawan'">Atur anggota</button>
+                    <button type="button" class="btn btn-lg btn-block btn-dark" name="btn_jadwal_pribadi" onclick="location.href='<?php echo base_url(); ?>index.php/pustakawan/AturAnggota_Pustakawan'">Atur anggota</button>
                 </div>
             </div>
             <div class="card mb-8 box-shadow">
@@ -224,13 +224,13 @@
                     <h7>Anda bisa tambah, hapus dan edit buku di halaman ini</h7>
                     <br>
                     <br>
-                    <button type="button" class="btn btn-lg btn-block btn-primary" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url(); ?>index.php/pustakawan/AturBuku_Pustakawan'">Atur buku</button>
+                    <button type="button" class="btn btn-lg btn-block btn-dark" name="btn_jadwal_umum" onclick="location.href='<?php echo base_url(); ?>index.php/pustakawan/AturBuku_Pustakawan'">Atur buku</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <?php include "templates/footer.php"; ?>
 </body>
+<?php include "templates/footer.php"; ?>
 
 </html>
