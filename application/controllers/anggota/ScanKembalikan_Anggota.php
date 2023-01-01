@@ -1,3 +1,4 @@
+
 <?php
 class ScanKembalikan_Anggota extends CI_Controller
 {
@@ -16,5 +17,4 @@ class ScanKembalikan_Anggota extends CI_Controller
     {
         $this->load->view('v_anggota_pengembalian');
     }
-
 }

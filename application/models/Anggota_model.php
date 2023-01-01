@@ -12,7 +12,7 @@ class Anggota_model extends CI_Model
         $this->email = $data['email'];
         $this->alamat = $data['alamat'];
         $this->no_telepon = $data['no_telepon'];
-        $this->last_login = $data['last_login'];
+        // $this->last_login = $data['last_login'];
         $this->db->insert('anggota', $this);
     }
 

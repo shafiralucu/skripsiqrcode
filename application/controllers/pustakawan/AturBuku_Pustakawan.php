@@ -44,7 +44,12 @@ class AturBuku_Pustakawan extends CI_Controller
             $this->Buku_model->add_buku($data);
         }
 
-        $no_eks = $this->Eksemplar_model->get_no_eks_to_qr($isbn_buku)->no_eksemplar;
+        $eksemplar = $this->Eksemplar_model->get_no_eks_to_qr($isbn_buku);
+        if (isset($eksemplar)) {
+            $no_eks = $eksemplar->no_eksemplar;
+        } else {
+            $no_eks = null;
+        }
 
 
         $data_eksemplar = [];
@@ -104,13 +109,11 @@ class AturBuku_Pustakawan extends CI_Controller
     {
         //get id yang mau di edit
         $isbn_buku = $id;
-
         $nomor_panggil = $this->input->post('nomor_panggil');
         $penerbit = $this->input->post('penerbit');
         $tahun = $this->input->post('tahun');
         $bahasa = $this->input->post('bahasa');
-        $qr_code = "";
-        $status = "";
+
 
 
         $data = array(

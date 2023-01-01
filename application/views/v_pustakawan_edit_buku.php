@@ -129,27 +129,27 @@
           <div class="modal-body">
             <div class="form-group">
               <label>ISBN Buku</label>
-              <input type="text" name="isbn_buku" class="form-control" value="" id="isbn_buku">
+              <input type="text" name="isbn_buku" class="form-control" value="" id="isbn_buku" required>
             </div>
             <div class="form-group">
               <label>Judul Buku</label>
-              <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku">
+              <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku" required>
             </div>
             <div class="form-group">
               <label>Nomor Panggil</label>
-              <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil">
+              <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil" required>
             </div>
             <div class="form-group">
               <label>Penerbit</label>
-              <input type="text" name="penerbit" class="form-control" value="" id="penerbit">
+              <input type="text" name="penerbit" class="form-control" value="" id="penerbit" required>
             </div>
             <div class="form-group">
               <label>Tahun Terbit</label>
-              <input type="text" name="tahun" class="form-control" value="" id="tahun">
+              <input type="text" name="tahun" class="form-control" value="" id="tahun" required>
             </div>
             <div class="form-group">
               <label>Bahasa</label>
-              <input type="text" name="bahasa" class="form-control" value="" id="bahasa">
+              <input type="text" name="bahasa" class="form-control" value="" id="bahasa" required>
             </div>
             <div class="form-group">
               <input type="hidden" name="status" class="form-control" value="Tersedia" id="status">
@@ -218,23 +218,23 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Judul Buku</label>
-                    <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku_edit">
+                    <input type="text" name="judul_buku" class="form-control" value="" id="judul_buku_edit" required>
                   </div>
                   <div class="form-group">
                     <label>Nomor Panggil</label>
-                    <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil_edit">
+                    <input type="text" name="nomor_panggil" class="form-control" value="" id="nomor_panggil_edit" required>
                   </div>
                   <div class="form-group">
                     <label>Penerbit</label>
-                    <input type="text" name="penerbit" class="form-control" value="" id="penerbit_edit">
+                    <input type="text" name="penerbit" class="form-control" value="" id="penerbit_edit" required>
                   </div>
                   <div class="form-group">
                     <label>Tahun Terbit</label>
-                    <input type="text" name="tahun" class="form-control" value="" id="tahun_edit">
+                    <input type="text" name="tahun" class="form-control" value="" id="tahun_edit" required>
                   </div>
                   <div class="form-group">
                     <label>Bahasa</label>
-                    <input type="text" name="bahasa" class="form-control" value="" id="bahasa_edit">
+                    <input type="text" name="bahasa" class="form-control" value="" id="bahasa_edit" required>
                   </div>
                   <h6 class="text-danger">Pastikan semua data telah terisi dengan benar</h6>
                   <div class="modal-footer">

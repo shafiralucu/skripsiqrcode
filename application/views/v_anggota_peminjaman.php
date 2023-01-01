@@ -337,12 +337,11 @@
                     if (data.trim() == 'true') {
                         window.location.href = "<?php echo site_url('anggota/Sukses_Anggota'); ?>";
                     } else {
-                        alert('Proses peminjaman gagal!');
+                        alert('Proses peminjaman gagal karena anda melakukan scan pada buku dengan Status: Tidak Tersedia, atau anda sudah scan buku ini lebih dari satu kali. Anda bisa mengecek halaman home untuk mengetahui peminjaman yang sedang aktif.');
                     }
                     console.log(response);
                 });
 
-            //window.location.href=content;
         });
         Instascan.Camera.getCameras().then(function(cameras) {
             if (cameras.length > 0) {

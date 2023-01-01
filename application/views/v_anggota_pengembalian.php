@@ -317,12 +317,11 @@
                     alert('Proses pengembalian sukses!');
                 
                 } else {
-                    alert('Proses pengembalian gagal!');
+                    alert('Proses pengembalian gagal karena anda melakukan scan pada buku dengan Status: Tersedia, atau anda sudah scan buku ini lebih dari satu kali. Anda bisa mengecek halaman home untuk mengetahui jika pengembalian anda sudah tercatat.');
                 }
                 console.log(response);
             });
             
-        //window.location.href=content;
     });
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {

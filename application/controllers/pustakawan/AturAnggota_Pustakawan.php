@@ -26,14 +26,14 @@ class AturAnggota_Pustakawan extends CI_Controller
         $email = $this->input->post('emailanggota');
         $alamat = $this->input->post('alamat');
         $no_telepon = $this->input->post('no_telepon');
-        $last_login = $this->input->post('last_login');
+        // $last_login = $this->input->post('last_login');
  
         $data['nama'] = $nama;
         $data['password'] = $password;
         $data['email'] = $email;
         $data['no_telepon'] = $no_telepon;
         $data['alamat'] = $alamat;
-        $data['last_login'] = $last_login;
+        // $data['last_login'] = $last_login;
 
 
         $this->Anggota_model->add_anggota($data);
@@ -66,7 +66,7 @@ class AturAnggota_Pustakawan extends CI_Controller
         $id_edit = $id;
         
 		$nama = $this->input->post('nama');
-        $password = $this->input->post('password');
+        $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         $email = $this->input->post('emailanggota');
         $no_hp = $this->input->post('nohp');
         $alamat = $this->input->post('alamat');

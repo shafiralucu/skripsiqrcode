@@ -15,9 +15,6 @@ class StatusPinjam_Anggota extends CI_Controller
 
     public function index()
     {
-        // $id_anggota = $this->session->userdata('id_anggota');
-        // $id_eksemplar = $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id;
-        // $data['detail_peminjaman_buku'] = $this->Peminjaman_model->get_detail_buku($id_eksemplar, $id_anggota);
         $this->load->view('v_anggota_peminjaman');
     }
 

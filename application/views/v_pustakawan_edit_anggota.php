@@ -218,7 +218,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" value="Simpan jadwal">
+                      <input type="submit" class="btn btn-primary" value="Simpan Data">
                     </div>
                     <h6 class="text-danger">*Pastikan semua data telah terisi dengan benar</h6>
                 </form>

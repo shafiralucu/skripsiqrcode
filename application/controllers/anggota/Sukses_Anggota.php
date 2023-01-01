@@ -15,8 +15,6 @@ class Sukses_Anggota extends CI_Controller
 
     public function index()
     {
-        // $id_anggota = $this->session->userdata('id_anggota');
-        // $id_eksemplar = $this->Eksemplar_model->get_id_from_eks_isbn($no_eksemplar, $isbn_buku)->id;
         $id_anggota         = $this->session->userdata['data_buku_dipinjam']['id_anggota_pinjam'];
         $id_eksemplar         = $this->session->userdata['data_buku_dipinjam']['id_eksemplar'];
         $tanggal_peminjaman         = $this->session->userdata['data_buku_dipinjam']['tanggal_peminjaman'];

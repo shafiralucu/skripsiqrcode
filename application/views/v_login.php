@@ -139,14 +139,9 @@
           <div class="center">
 			<h4>Sistem Peminjaman Buku di Perpustakaan dengan QR Code</h4>
 			<br>
-            <h4 text-align="center" style="color: red;">
-                  <?php
-                      $info = $this->session->flashdata('info');
-                      if(!empty($info)){
-                                  echo $info;
-                      }
-                  ?>
-          </h4>
+            <!-- <h4 text-align="center" style="color: red;">
+                 
+          </h4> -->
           </div>
             <form action="<?= site_url('Login/attempt_anggota_login') ?>" method="post">
               <div class="form-floating mb-3">
